@@ -16,753 +16,687 @@
         :root {
             --neon-primary: #00f2ff;
             --neon-secondary: #7000ff;
-            --bg-dark: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: radial-gradient(circle at top right, #1e293b, #0f172a, #020617);
+            background: radial-gradient(circle at top right, #1a1a2e, #16213e, #0f3460);
             min-height: 100vh;
-            color: #f1f5f9;
+            color: #e2e8f0;
             overflow-x: hidden;
         }
 
-        /* Glassmorphism */
         .glass {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
         .neon-border {
-            border: 1px solid var(--neon-primary);
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+            box-shadow: 0 0 10px var(--neon-primary), inset 0 0 5px var(--neon-primary);
         }
 
         .neon-text {
-            text-shadow: 0 0 10px var(--neon-primary);
+            text-shadow: 0 0 8px var(--neon-primary);
         }
 
-        /* Typing Mechanics Styles */
         .typing-area {
             font-family: 'JetBrains Mono', monospace;
             line-height: 1.6;
-            font-size: 1.6rem;
-            word-spacing: 0.25em;
-            letter-spacing: -0.02em;
-            position: relative;
+            font-size: 1.5rem;
+            word-spacing: 0.2em;
         }
 
         .char {
             position: relative;
-            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            color: #475569;
+            transition: color 0.1s;
         }
 
-        .char.correct {
-            color: #10b981;
-            text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
-        }
+        .char.correct { color: #10b981; }
+        .char.incorrect { color: #ef4444; background: rgba(239, 68, 68, 0.2); border-radius: 2px; }
+        .char.current { color: var(--neon-primary); text-decoration: underline; }
 
-        .char.incorrect {
-            color: #ef4444;
-            background: rgba(239, 68, 68, 0.15);
-            border-radius: 3px;
-            text-decoration: underline;
-        }
-
-        .char.current {
-            color: var(--neon-primary);
-            background: rgba(0, 242, 255, 0.1);
-            border-radius: 3px;
-        }
-
-        .char.current::after {
-            content: '';
+        .cursor {
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--neon-primary);
             position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--neon-primary);
-            box-shadow: 0 0 8px var(--neon-primary);
-            animation: blink 0.8s infinite;
+            animation: blink 1s infinite;
         }
 
         @keyframes blink {
             50% { opacity: 0; }
         }
 
-        /* Virtual Keyboard Mechanics */
-        .keyboard {
-            display: grid;
-            grid-template-rows: repeat(4, 1fr);
-            gap: 8px;
-            max-width: 850px;
-            margin: 2rem auto;
-            perspective: 1000px;
+        .key-active {
+            background: var(--neon-primary) !important;
+            color: #000 !important;
+            transform: scale(0.95);
+            box-shadow: 0 0 15px var(--neon-primary);
         }
 
-        .key-row {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-        }
-
-        .key {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            padding: 14px;
-            min-width: 52px;
-            height: 52px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #94a3b8;
-            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
-            user-select: none;
-        }
-
-        .key.active {
-            background: var(--neon-primary);
-            color: #020617;
-            box-shadow: 0 0 25px var(--neon-primary);
-            transform: translateY(3px) scale(0.95);
-            border-color: white;
-        }
-
-        /* UI Elements */
-        .btn-action {
-            background: linear-gradient(135deg, var(--neon-primary), var(--neon-secondary));
-            color: white;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(112, 0, 255, 0.3);
-        }
-
-        .btn-action:hover {
-            transform: translateY(-2px) scale(1.02);
-            filter: brightness(1.1);
-            box-shadow: 0 8px 25px rgba(112, 0, 255, 0.4);
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: var(--neon-primary);
-        }
-
+        /* Hide Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, var(--neon-primary), var(--neon-secondary));
+            transition: all 0.3s ease;
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
     </style>
 </head>
-<body class="antialiased">
+<body class="transition-colors duration-300">
 
-    <!-- Login/Auth Screen -->
-    <div id="auth-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950 p-6 overflow-y-auto">
-        <div class="glass max-w-lg w-full p-10 rounded-[2.5rem] text-center border-t border-white/10">
-            <div class="mb-8">
-                <div class="w-20 h-20 bg-cyan-500/10 rounded-3xl flex items-center justify-center mx-auto mb-4 border border-cyan-500/20">
-                    <i class="fa-solid fa-keyboard text-4xl text-cyan-400 neon-text"></i>
-                </div>
-                <h1 class="text-5xl font-black mb-2 tracking-tight text-white uppercase italic">Typing<span class="text-cyan-400 neon-text">Pro</span></h1>
-                <p class="text-slate-400 font-medium italic">"Where elite typists are born and bad jokes live."</p>
-            </div>
+    <!-- App State Management UI -->
+    <div id="auth-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950 p-4">
+        <div class="glass max-w-md w-full p-8 rounded-2xl text-center">
+            <h1 class="text-4xl font-bold mb-2 neon-text text-cyan-400">TypingPro</h1>
+            <p class="text-slate-400 mb-8">Master your keystrokes. Join the elite.</p>
             
-            <div id="auth-form-container" class="space-y-5">
-                <div class="flex p-1 bg-slate-900/50 rounded-2xl border border-white/5 mb-4">
-                    <button onclick="setAuthMode('student')" id="btn-student" class="flex-1 py-3 rounded-xl transition-all duration-300 font-bold text-sm bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">Student Portal</button>
-                    <button onclick="setAuthMode('teacher')" id="btn-teacher" class="flex-1 py-3 rounded-xl transition-all duration-300 font-bold text-sm text-slate-500 hover:text-white">Teacher Hub</button>
+            <div id="auth-form" class="space-y-4">
+                <div class="flex gap-2 mb-6 p-1 bg-white/5 rounded-lg">
+                    <button onclick="setAuthMode('student')" id="btn-student" class="flex-1 py-2 rounded-md bg-cyan-500/20 border border-cyan-500/50 text-cyan-300">Student</button>
+                    <button onclick="setAuthMode('teacher')" id="btn-teacher" class="flex-1 py-2 rounded-md text-slate-400 hover:text-white">Teacher</button>
                 </div>
                 
-                <button onclick="handleGoogleLogin()" class="w-full flex items-center justify-center gap-4 bg-white text-slate-900 py-4 rounded-2xl font-bold hover:bg-slate-100 transition-all shadow-xl group">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/hf/google.svg" class="w-6 group-hover:scale-110 transition-transform" alt="Google">
+                <button onclick="handleGoogleLogin()" class="w-full flex items-center justify-center gap-3 bg-white text-slate-900 py-3 rounded-xl font-semibold hover:bg-slate-100 transition-all">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/hf/google.svg" class="w-6" alt="Google">
                     Continue with Google
                 </button>
                 
-                <div class="relative py-3">
-                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-white/5"></div></div>
-                    <div class="relative flex justify-center text-xs uppercase font-black"><span class="bg-slate-950 px-4 text-slate-600">Secure Email Login</span></div>
+                <div class="relative py-4">
+                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-white/10"></div></div>
+                    <div class="relative flex justify-center text-xs uppercase"><span class="bg-slate-950 px-2 text-slate-500">Or use email</span></div>
                 </div>
 
-                <div class="space-y-3">
-                    <div class="relative">
-                        <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
-                        <input type="email" id="email" placeholder="Email Address" class="w-full bg-slate-900/50 border border-white/10 rounded-2xl pl-12 pr-4 py-4 outline-none focus:border-cyan-500 transition-all text-white">
-                    </div>
-                    <div class="relative">
-                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
-                        <input type="password" id="password" placeholder="Password" class="w-full bg-slate-900/50 border border-white/10 rounded-2xl pl-12 pr-4 py-4 outline-none focus:border-cyan-500 transition-all text-white">
-                    </div>
-                </div>
+                <input type="email" id="email" placeholder="Email Address" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-cyan-500 transition-all">
+                <input type="password" id="password" placeholder="Password" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-cyan-500 transition-all">
                 
-                <button onclick="handleEmailAuth()" class="w-full btn-action py-4 rounded-2xl text-lg font-black tracking-wide shadow-2xl">
-                    <span id="btn-auth-text">Access Interface</span>
+                <button onclick="handleEmailAuth()" class="w-full btn-gradient py-3 rounded-xl font-bold text-slate-950">
+                    Sign In / Sign Up
                 </button>
             </div>
             
-            <div id="auth-loading" class="hidden py-10">
-                <div class="relative w-20 h-20 mx-auto mb-6">
-                    <div class="absolute inset-0 rounded-full border-4 border-cyan-500/20"></div>
-                    <div class="absolute inset-0 rounded-full border-4 border-t-cyan-400 animate-spin"></div>
-                </div>
-                <p id="loading-text" class="text-cyan-400 font-bold animate-pulse">Syncing Cloud Profile...</p>
-                <button id="auth-error-reset" onclick="location.reload()" class="hidden mt-6 text-sm text-red-400 underline hover:text-red-300">Auth Error. Click to retry connection.</button>
+            <div id="auth-loading" class="hidden">
+                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500 mx-auto"></div>
+                <p class="mt-4 text-cyan-500">Authenticating...</p>
             </div>
         </div>
     </div>
 
     <!-- Main Navigation -->
-    <nav id="main-nav" class="hidden fixed top-0 w-full z-50 glass border-b border-white/5 px-8 py-4 flex items-center justify-between">
-        <div class="flex items-center gap-6">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-cyan-500/10 rounded-xl flex items-center justify-center border border-cyan-500/20">
-                    <i class="fa-solid fa-bolt text-cyan-400"></i>
-                </div>
-                <span class="text-2xl font-black text-white italic tracking-tighter">TYPING<span class="text-cyan-400">PRO</span></span>
-            </div>
+    <nav id="main-nav" class="hidden fixed top-0 w-full z-40 glass border-b border-white/5 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <span class="text-2xl font-bold neon-text text-cyan-400">TP</span>
             <div class="h-6 w-[1px] bg-white/10"></div>
-            <span id="nav-role-badge" class="px-3 py-1 bg-cyan-500/10 text-cyan-400 text-[10px] rounded-full border border-cyan-500/20 uppercase font-black tracking-widest">Student</span>
+            <span id="nav-role-badge" class="px-2 py-1 bg-cyan-500/10 text-cyan-400 text-xs rounded uppercase tracking-widest font-bold border border-cyan-500/20">Student</span>
         </div>
         
-        <div class="flex items-center gap-2">
-            <button onclick="switchTab('test')" id="link-test" class="nav-link px-4 py-2 rounded-xl text-cyan-400 font-bold bg-cyan-500/10">Practice</button>
-            <button onclick="switchTab('dashboard')" id="link-dashboard" class="nav-link px-4 py-2 rounded-xl text-slate-400 font-bold hover:text-white transition-all">Stats</button>
-            <button onclick="switchTab('leaderboard')" id="link-leaderboard" class="nav-link px-4 py-2 rounded-xl text-slate-400 font-bold hover:text-white transition-all">Hall of Fame</button>
-            <div class="w-[1px] h-6 bg-white/10 mx-2"></div>
-            <button onclick="handleLogout()" class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:bg-red-500/10 hover:text-red-400 transition-all">
-                <i class="fa-solid fa-power-off"></i>
-            </button>
+        <div class="flex items-center gap-6">
+            <button onclick="switchTab('test')" class="nav-link text-cyan-400 font-medium">Typing Test</button>
+            <button onclick="switchTab('dashboard')" class="nav-link text-slate-400 hover:text-white transition-all">Dashboard</button>
+            <button onclick="switchTab('leaderboard')" class="nav-link text-slate-400 hover:text-white transition-all">Leaderboard</button>
+            <button onclick="handleLogout()" class="ml-4 p-2 text-slate-400 hover:text-red-400"><i class="fa-solid fa-right-from-bracket"></i></button>
         </div>
     </nav>
 
-    <main id="app-container" class="hidden pt-28 pb-20 px-6 max-w-7xl mx-auto space-y-10">
+    <!-- Main Content Container -->
+    <main id="app-container" class="hidden pt-24 pb-12 px-4 max-w-6xl mx-auto space-y-8">
         
         <!-- TYPING TEST VIEW -->
-        <section id="view-test" class="space-y-10">
-            <div class="flex flex-wrap items-center justify-between gap-6">
-                <div class="flex gap-2 bg-slate-900/50 p-1.5 rounded-2xl border border-white/5">
-                    <button onclick="setTestDuration(15)" id="dur-15" class="duration-btn px-6 py-2.5 rounded-xl text-xs font-black transition-all text-slate-500 hover:text-white uppercase tracking-widest">15s</button>
-                    <button onclick="setTestDuration(30)" id="dur-30" class="duration-btn px-6 py-2.5 rounded-xl text-xs font-black transition-all active bg-cyan-500 text-slate-950 uppercase tracking-widest shadow-lg shadow-cyan-500/20">30s</button>
-                    <button onclick="setTestDuration(60)" id="dur-60" class="duration-btn px-6 py-2.5 rounded-xl text-xs font-black transition-all text-slate-500 hover:text-white uppercase tracking-widest">60s</button>
+        <section id="view-test" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="glass p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <span class="text-slate-400 text-sm uppercase tracking-wider">Timer</span>
+                    <span id="stat-timer" class="text-4xl font-bold text-cyan-400">30s</span>
                 </div>
-
-                <div class="flex gap-6">
-                    <div class="glass px-8 py-4 rounded-3xl text-center min-w-[120px] border-t border-white/5">
-                        <div class="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">Current Speed</div>
-                        <div class="flex items-baseline justify-center gap-1">
-                            <span id="stat-wpm" class="text-4xl font-black text-white tabular-nums">0</span>
-                            <span class="text-cyan-400 text-xs font-bold">WPM</span>
-                        </div>
-                    </div>
-                    <div class="glass px-8 py-4 rounded-3xl text-center min-w-[120px] border-t border-white/5">
-                        <div class="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">Accuracy</div>
-                        <div id="stat-accuracy" class="text-4xl font-black text-emerald-400 tabular-nums">100%</div>
-                    </div>
-                    <div class="glass px-8 py-4 rounded-3xl text-center min-w-[120px] border-t border-white/5 border-cyan-500/20">
-                        <div class="text-slate-500 text-[10px] font-black uppercase tracking-widest mb-1">Time Left</div>
-                        <div id="stat-timer" class="text-4xl font-black text-cyan-400 tabular-nums">30s</div>
-                    </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <span class="text-slate-400 text-sm uppercase tracking-wider">WPM</span>
+                    <span id="stat-wpm" class="text-4xl font-bold">0</span>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <span class="text-slate-400 text-sm uppercase tracking-wider">Accuracy</span>
+                    <span id="stat-accuracy" class="text-4xl font-bold">100%</span>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center justify-center">
+                    <span class="text-slate-400 text-sm uppercase tracking-wider">Errors</span>
+                    <span id="stat-errors" class="text-4xl font-bold text-red-500">0</span>
                 </div>
             </div>
 
-            <div class="glass p-12 rounded-[3.5rem] relative min-h-[300px] shadow-2xl border-white/5 group transition-all duration-500 hover:border-cyan-500/20">
-                <div id="typing-box" class="typing-area outline-none select-none relative z-10"></div>
-                <input type="text" id="hidden-input" class="absolute opacity-0 pointer-events-none" autocomplete="off" spellcheck="false">
-                
-                <div class="absolute bottom-6 right-10 flex items-center gap-3 text-slate-600 font-bold text-xs uppercase tracking-widest">
-                    <i class="fa-solid fa-keyboard animate-bounce"></i>
-                    <span>Start Typing to Begin</span>
+            <div class="glass p-8 rounded-3xl relative overflow-hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex gap-2">
+                        <button onclick="setDuration(30)" class="duration-btn px-4 py-1 rounded-full text-sm bg-cyan-500/20 text-cyan-300 border border-cyan-500/50">30s</button>
+                        <button onclick="setDuration(60)" class="duration-btn px-4 py-1 rounded-full text-sm bg-white/5 text-slate-400 border border-white/10">60s</button>
+                        <button onclick="setDuration(120)" class="duration-btn px-4 py-1 rounded-full text-sm bg-white/5 text-slate-400 border border-white/10">120s</button>
+                    </div>
+                    <button onclick="resetTest()" class="text-slate-400 hover:text-white transition-all">
+                        <i class="fa-solid fa-rotate-right mr-2"></i> Restart
+                    </button>
                 </div>
+
+                <div id="typing-box" class="typing-area min-h-[180px] outline-none relative z-10 select-none">
+                    <!-- Text will be injected here -->
+                </div>
+                
+                <input type="text" id="hidden-input" class="absolute opacity-0 pointer-events-none" autocomplete="off" autofocus>
             </div>
 
             <!-- Virtual Keyboard -->
-            <div id="virtual-keyboard" class="keyboard opacity-60">
-                <!-- Injected via JavaScript -->
-            </div>
-
-            <div class="flex justify-center gap-8 text-slate-500 text-xs font-bold uppercase tracking-widest">
-                <div class="flex items-center gap-2"><kbd class="bg-white/5 px-2 py-1 rounded border border-white/10 text-white">Tab</kbd><span>Quick Restart</span></div>
-                <div class="flex items-center gap-2"><kbd class="bg-white/5 px-2 py-1 rounded border border-white/10 text-white">Esc</kbd><span>End Test</span></div>
+            <div id="keyboard" class="glass p-6 rounded-3xl flex flex-col gap-2 max-w-4xl mx-auto opacity-80 scale-90 md:scale-100">
+                <!-- JS will inject keyboard rows -->
             </div>
         </section>
 
         <!-- DASHBOARD VIEW -->
-        <section id="view-dashboard" class="hidden space-y-8 animate-in fade-in duration-500">
-            <div class="grid lg:grid-cols-4 gap-8">
+        <section id="view-dashboard" class="hidden space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- User Profile Card -->
-                <div class="lg:col-span-1 glass p-8 rounded-[2.5rem] text-center border-t border-white/5">
-                    <div id="user-avatar" class="w-24 h-24 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-[2rem] flex items-center justify-center text-4xl font-black text-white mx-auto mb-6 shadow-2xl rotate-3">?</div>
-                    <h3 id="user-display-name" class="text-2xl font-black mb-1 text-white tracking-tight">...</h3>
-                    <p id="user-display-email" class="text-slate-500 text-sm font-medium mb-8">...</p>
+                <div class="glass p-6 rounded-2xl col-span-1">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div id="user-avatar" class="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-500 flex items-center justify-center text-2xl font-bold text-white">?</div>
+                        <div>
+                            <h3 id="user-display-name" class="text-xl font-bold">User Name</h3>
+                            <p id="user-display-email" class="text-slate-400 text-sm">email@example.com</p>
+                        </div>
+                    </div>
                     
-                    <div id="student-tools" class="space-y-4">
-                        <div class="p-5 bg-slate-900/50 rounded-2xl border border-white/5 text-left">
-                            <div class="text-[10px] text-slate-500 font-black uppercase tracking-widest mb-2">Classroom Assignment</div>
-                            <div id="display-class-id" class="text-xl font-black text-cyan-400 tracking-tighter">UNASSIGNED</div>
+                    <div id="student-class-section" class="space-y-4">
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/10">
+                            <label class="text-xs text-slate-500 uppercase font-bold">Current Class</label>
+                            <div id="display-class-id" class="text-lg font-mono text-cyan-400">No Class Joined</div>
                         </div>
                         <div class="flex gap-2">
-                            <input type="text" id="join-class-input" placeholder="Enter Class ID" class="flex-1 bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-cyan-500 text-sm font-bold text-white uppercase tracking-widest">
-                            <button onclick="joinClass()" class="bg-cyan-500 text-slate-950 px-5 rounded-xl font-black text-xs hover:bg-cyan-400 transition-all uppercase tracking-widest">Link</button>
+                            <input type="text" id="join-class-input" placeholder="Enter Class ID" class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 outline-none">
+                            <button onclick="joinClass()" class="bg-cyan-500/20 text-cyan-400 px-4 py-2 rounded-lg hover:bg-cyan-500/30 transition-all border border-cyan-500/30">Join</button>
                         </div>
                     </div>
 
-                    <div id="teacher-tools" class="hidden space-y-4">
-                        <div class="p-6 bg-cyan-500/10 rounded-2xl border border-cyan-500/20 text-left">
-                            <div class="text-[10px] text-cyan-400 font-black uppercase tracking-widest mb-2">Your Unique Class Code</div>
-                            <div id="teacher-class-id" class="text-2xl font-black flex justify-between items-center text-white tracking-widest">
-                                <span>...</span>
-                                <button onclick="copyClassId()" class="text-xs text-slate-500 hover:text-white transition-all"><i class="fa-regular fa-copy"></i></button>
+                    <div id="teacher-class-section" class="hidden space-y-4">
+                        <div class="p-4 bg-cyan-500/10 rounded-xl border border-cyan-500/20">
+                            <label class="text-xs text-cyan-500 uppercase font-bold">Your Classroom ID</label>
+                            <div id="teacher-class-id" class="text-xl font-mono text-white flex justify-between items-center">
+                                <span>Loading...</span>
+                                <button onclick="copyClassId()" class="text-slate-400 hover:text-white"><i class="fa-regular fa-copy"></i></button>
                             </div>
                         </div>
-                        <div class="text-left space-y-3">
-                            <label class="text-[10px] text-slate-500 font-black uppercase tracking-widest ml-1">Push Custom Practice</label>
-                            <textarea id="custom-push-text" placeholder="Teachers: Type a paragraph for your students to practice..." class="w-full bg-slate-900/50 border border-white/10 rounded-2xl p-4 text-sm font-medium outline-none focus:border-cyan-500 text-white min-h-[120px] transition-all" spellcheck="false"></textarea>
-                            <button onclick="pushTeacherText()" class="w-full py-4 bg-purple-600 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-purple-500 transition-all shadow-xl shadow-purple-900/20">Distribute Text</button>
-                        </div>
+                        <button onclick="showCreateTestModal()" class="w-full btn-gradient py-3 rounded-xl font-bold text-slate-900">Create New Test</button>
                     </div>
                 </div>
 
-                <!-- Stats and History -->
-                <div class="lg:col-span-3 space-y-8">
-                    <div class="glass p-8 rounded-[2.5rem] border-t border-white/5 min-h-[400px]">
-                        <div class="flex justify-between items-center mb-8">
-                            <h4 class="text-sm font-black text-slate-400 uppercase tracking-widest">WPM Progression (Last 20 Tests)</h4>
-                            <div class="flex items-center gap-3">
-                                <span class="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(0,242,255,0.8)]"></span>
-                                <span class="text-[10px] font-black text-slate-500 uppercase">Speed Performance</span>
-                            </div>
-                        </div>
-                        <div class="h-[300px]">
-                            <canvas id="performanceChart"></canvas>
-                        </div>
+                <!-- Stats/History Section -->
+                <div class="glass p-6 rounded-2xl col-span-1 md:col-span-2">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-cyan-400"></i> Performance History
+                    </h3>
+                    <div class="h-[250px] w-full">
+                        <canvas id="performanceChart"></canvas>
                     </div>
+                </div>
+            </div>
 
-                    <div class="glass rounded-[2.5rem] overflow-hidden border-t border-white/5">
-                        <div class="p-6 bg-white/5 border-b border-white/5 flex justify-between items-center">
-                            <h4 class="text-sm font-black text-slate-400 uppercase tracking-widest">Global Activity Feed</h4>
-                            <button onclick="loadDashboard()" class="text-xs text-cyan-400 font-black uppercase hover:underline">Refresh</button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead class="bg-slate-900/50 text-[10px] text-slate-500 font-black uppercase tracking-widest">
-                                    <tr>
-                                        <th class="p-6">Time Ago</th>
-                                        <th class="p-6">Typist Name</th>
-                                        <th class="p-6 text-right">Avg Speed</th>
-                                        <th class="p-6 text-right">Accuracy</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="results-tbody" class="text-sm divide-y divide-white/5">
-                                    <!-- Results via JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            <!-- Detailed History Table -->
+            <div class="glass rounded-2xl overflow-hidden">
+                <div class="p-6 border-b border-white/5 flex justify-between items-center">
+                    <h3 class="text-xl font-bold">Detailed Results</h3>
+                    <button onclick="exportToCSV()" class="text-sm text-cyan-400 hover:underline">Export CSV</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-white/5 text-slate-400 text-xs uppercase">
+                            <tr>
+                                <th class="px-6 py-4">Date</th>
+                                <th class="px-6 py-4">Student</th>
+                                <th class="px-6 py-4">WPM</th>
+                                <th class="px-6 py-4">Accuracy</th>
+                                <th class="px-6 py-4">Errors</th>
+                                <th class="px-6 py-4">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-tbody" class="divide-y divide-white/5">
+                            <!-- Table rows injected by JS -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
 
         <!-- LEADERBOARD VIEW -->
-        <section id="view-leaderboard" class="hidden max-w-3xl mx-auto animate-in slide-in-from-bottom-10 duration-700">
-            <div class="glass rounded-[3.5rem] overflow-hidden shadow-2xl border-t border-white/5">
-                <div class="p-12 border-b border-white/5 text-center bg-gradient-to-b from-white/5 to-transparent">
-                    <div class="inline-flex p-4 bg-cyan-500/10 rounded-3xl mb-6 border border-cyan-500/20">
-                        <i class="fa-solid fa-crown text-4xl text-cyan-400 neon-text"></i>
-                    </div>
-                    <h2 class="text-4xl font-black text-white italic uppercase tracking-tighter">Classroom <span class="text-cyan-400">Legends</span></h2>
-                    <p class="text-slate-500 font-bold uppercase text-[10px] tracking-[0.3em] mt-2">The fastest fingers in the sector</p>
-                </div>
-                <div id="leaderboard-list" class="divide-y divide-white/5 bg-slate-900/20">
-                    <!-- Leaderboard entries -->
+        <section id="view-leaderboard" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto">
+                <h2 class="text-4xl font-bold neon-text text-cyan-400 mb-2">Classroom Elite</h2>
+                <p class="text-slate-400">The fastest fingers in your current classroom.</p>
+            </div>
+
+            <!-- Top 3 Podium -->
+            <div id="leaderboard-podium" class="flex justify-center items-end gap-4 pt-12 pb-8">
+                <!-- Injected by JS -->
+            </div>
+
+            <!-- Ranking List -->
+            <div class="glass max-w-3xl mx-auto rounded-3xl overflow-hidden">
+                <div id="leaderboard-list" class="divide-y divide-white/5">
+                    <!-- Injected by JS -->
                 </div>
             </div>
         </section>
+
     </main>
 
-    <!-- Modal for Test Results -->
-    <div id="modal-test-result" class="fixed inset-0 z-[150] hidden flex items-center justify-center bg-slate-950/90 backdrop-blur-md p-6">
-        <div class="glass max-w-xl w-full p-12 rounded-[3.5rem] text-center shadow-2xl border-cyan-500/30">
-            <h2 class="text-4xl font-black text-white mb-2 uppercase tracking-tighter italic">Test <span class="text-cyan-400">Complete</span></h2>
-            <p class="text-slate-500 font-bold uppercase text-xs tracking-widest mb-10">Upload successful. Syncing results to server.</p>
+    <!-- Modals -->
+    <div id="modal-test-result" class="fixed inset-0 z-[60] hidden bg-slate-950/80 backdrop-blur-sm p-4 flex items-center justify-center">
+        <div class="glass max-w-md w-full p-8 rounded-3xl text-center scale-up">
+            <div class="w-20 h-20 bg-cyan-500/20 text-cyan-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <h2 class="text-3xl font-bold mb-2">Test Complete!</h2>
+            <p class="text-slate-400 mb-8">Excellent effort! Here is how you did:</p>
             
-            <div class="grid grid-cols-2 gap-6 mb-12">
-                <div class="p-8 bg-cyan-500/10 rounded-[2.5rem] border border-cyan-500/20 group hover:bg-cyan-500/20 transition-all duration-300">
-                    <div class="text-[10px] text-cyan-400 uppercase font-black tracking-widest mb-2">Net Speed</div>
-                    <div class="flex items-baseline justify-center gap-1">
-                        <div id="modal-wpm" class="text-6xl font-black text-white tabular-nums">0</div>
-                        <span class="text-cyan-400 font-bold text-sm">WPM</span>
-                    </div>
-                    <div class="text-[10px] text-slate-500 mt-2 font-bold uppercase tracking-widest">Adjusted for errors</div>
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="p-4 bg-white/5 rounded-2xl">
+                    <div class="text-sm text-slate-500">WPM</div>
+                    <div id="modal-wpm" class="text-3xl font-bold text-cyan-400">0</div>
                 </div>
-                <div class="p-8 bg-purple-500/10 rounded-[2.5rem] border border-purple-500/20 group hover:bg-purple-500/20 transition-all duration-300">
-                    <div class="text-[10px] text-purple-400 uppercase font-black tracking-widest mb-2">Accuracy</div>
-                    <div id="modal-accuracy" class="text-6xl font-black text-white tabular-nums">0%</div>
-                    <div class="text-[10px] text-slate-500 mt-2 font-bold uppercase tracking-widest">Correct characters</div>
+                <div class="p-4 bg-white/5 rounded-2xl">
+                    <div class="text-sm text-slate-500">Accuracy</div>
+                    <div id="modal-acc" class="text-3xl font-bold text-white">0%</div>
                 </div>
             </div>
             
-            <button onclick="closeResultModal()" class="w-full btn-action py-5 rounded-[2rem] font-black text-xl shadow-2xl uppercase tracking-widest">
-                Initiate New Sequence
-            </button>
+            <div class="flex gap-3">
+                <button onclick="closeModal('modal-test-result')" class="flex-1 py-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all">Close</button>
+                <button onclick="shareResult()" class="flex-1 py-3 btn-gradient text-slate-900 font-bold rounded-xl">Share Card</button>
+            </div>
         </div>
     </div>
 
+    <!-- Firebase Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, query, onSnapshot, addDoc, updateDoc, serverTimestamp, getDocs, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, query, onSnapshot, addDoc, updateDoc, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase Configuration (Same as provided)
+        // --- STEP 1: CHANGE THIS CONFIGURATION ---
+        // Get your NEW firebaseConfig from the Firebase Console (Gear icon > Project Settings)
+        // Ensure you selected 'nam5 (us-central)' when creating the Firestore database.
         const firebaseConfig = {
-            apiKey: "AIzaSyCVCqtRMximnRGIAYRt2UeZSchXSHy1A3s",
-            authDomain: "typingtestfinal.firebaseapp.com",
-            projectId: "typingtestfinal",
-            storageBucket: "typingtestfinal.firebasestorage.app",
-            messagingSenderId: "763957541351",
-            appId: "1:763957541351:web:467f03f106d2cf3bf56542"
-        };
+  apiKey: "AIzaSyCVCqtRMximnRGIAYRt2UeZSchXSHy1A3s",
+  authDomain: "typingtestfinal.firebaseapp.com",
+  projectId: "typingtestfinal",
+  storageBucket: "typingtestfinal.firebasestorage.app",
+  messagingSenderId: "763957541351",
+  appId: "1:763957541351:web:467f03f106d2cf3bf56542"
+};
+      // -----------------------------------------
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = "typingtestfinal-v3";
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'typing-pro-default';
 
-        // Expanded Core State
+        // GLOBAL STATE
         let currentUser = null;
         let userData = null;
-        let authMode = 'student';
+        let authMode = 'student'; // 'student' or 'teacher'
+        let currentTab = 'test';
         let testActive = false;
         let timer = null;
-        let testDuration = 30;
         let timeLeft = 30;
+        let selectedDuration = 30;
         let currentText = "";
+        let inputChars = [];
+        let errorCount = 0;
+        let startTime = null;
         let performanceChart = null;
 
-        // EXPANDED COMEDY BANK (Restoring the length)
-        const COMEDY_BANK = [
-            "I asked my dog what he thought about the global economy and he just licked his own foot for ten minutes. Honestly, that was the most insightful financial advice I have heard all year. I am thinking of putting him in charge of my retirement fund since he clearly knows how to sit and stay.",
-            "My cat is a total jerk. I caught him trying to sell my laptop on eBay because I forgot to buy the premium salmon treats. He even wrote a description that said: Gently used by a human who doesn't understand the hierarchy of this household. I am currently sleeping with one eye open.",
-            "I told my doctor that I broke my arm in two places. He told me to stop going to those places. My bank account is basically just a high-stakes game of Tetris where I am trying to fit my bills into my paycheck before everything disappears off the bottom of the screen forever.",
-            "Being an adult is just googling how to do stuff while crying quietly in the kitchen. Yesterday I had to look up how to properly store a half-eaten onion. It turns out the answer is: Just don't. Eat the whole onion like a man or accept that your fridge will smell like regret.",
-            "Technology is amazing. I can talk to someone on the other side of the planet instantly, yet my printer acts like it has never met me before every time I try to print a simple boarding pass. It just sits there whirring and grinding like it is trying to solve world hunger.",
-            "Why do people say 'sleep like a baby'? Babies wake up every two hours screaming for snacks. I want to sleep like a 40-year-old on a Sunday afternoon after a large pizza. That is the kind of profound unconsciousness that requires a medical wellness check to ensure I am still actually alive.",
-            "My personal trainer asked me what my goal was. I told him I want to be able to carry all my groceries in one single trip from the car without having a minor cardiac event. He said that was more of a medical miracle than a fitness goal, but he would try to help me train for it.",
-            "I went to the gym today for exactly three minutes. I walked in, saw a guy doing something called a 'deadlift', and decided that I would much rather be a 'dead person' on my couch watching Netflix. Fitness is a state of mind, and my mind is currently in a deep coma.",
-            "I tried to make a healthy salad today but I accidentally added a large pepperoni pizza to it. It was the most delicious mistake I have ever made. My doctor says I need more greens in my diet, so I am going to start wearing green shirts while I eat my cheeseburgers.",
-            "The inventor of the USB drive should be forced to stand in a dark room and try to plug one in. They will fail twice, just like the rest of us, because everyone knows you have to flip it three times before it finally fits into the portal properly.",
-            "I have reached the age where my back goes out more than I do. I recently spent twenty minutes trying to get up from the floor after dropped a pen. I didn't even pick up the pen, I just accepted that it belongs to the carpet now.",
-            "My internet went down for ten minutes today, so I had to talk to my family. They seem like nice people. One of them claims to be my sister, but I will need to see some official identification before I fully commit to that relationship.",
-            "I am convinced that the person who invented the 'Check Engine' light just wanted to add a bit of mystery and suspense to our daily commutes. It doesn't tell you what is wrong, it just says 'Good luck, this could cost five dollars or five thousand dollars'."
+        const SAMPLE_TEXTS = [
+            "Technology is best when it brings people together. The purpose of education is to turn mirrors into windows. Learning never exhausts the mind.",
+            "Success is not final, failure is not fatal: it is the courage to continue that counts. The only way to do great work is to love what you do.",
+            "In the middle of every difficulty lies opportunity. Complexity is your enemy. Any fool can make something complicated. It is hard to keep things simple."
         ];
 
-        const KEYBOARD_LAYOUT = [
-            ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-            ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-            ["Z", "X", "C", "V", "B", "N", "M"],
-            ["Space"]
-        ];
-
-        // UI Initialization
-        const initKeyboard = () => {
-            const kb = document.getElementById('virtual-keyboard');
-            kb.innerHTML = '';
-            KEYBOARD_LAYOUT.forEach(row => {
-                const rowEl = document.createElement('div');
-                rowEl.className = 'key-row';
-                row.forEach(key => {
-                    const k = document.createElement('div');
-                    k.className = 'key';
-                    k.id = `key-${key.toLowerCase()}`;
-                    k.innerText = key;
-                    if(key === "Space") k.style.minWidth = "280px";
-                    rowEl.appendChild(k);
-                });
-                kb.appendChild(rowEl);
-            });
-        };
-
+        // UI HELPERS
         window.setAuthMode = (mode) => {
             authMode = mode;
-            const sBtn = document.getElementById('btn-student');
-            const tBtn = document.getElementById('btn-teacher');
-            if(mode === 'student') {
-                sBtn.className = 'flex-1 py-3 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-bold text-sm';
-                tBtn.className = 'flex-1 py-3 rounded-xl text-slate-500 hover:text-white font-bold text-sm';
-            } else {
-                tBtn.className = 'flex-1 py-3 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-bold text-sm';
-                sBtn.className = 'flex-1 py-3 rounded-xl text-slate-500 hover:text-white font-bold text-sm';
-            }
+            document.getElementById('btn-student').className = mode === 'student' ? 'flex-1 py-2 rounded-md bg-cyan-500/20 border border-cyan-500/50 text-cyan-300' : 'flex-1 py-2 rounded-md text-slate-400 hover:text-white';
+            document.getElementById('btn-teacher').className = mode === 'teacher' ? 'flex-1 py-2 rounded-md bg-cyan-500/20 border border-cyan-500/50 text-cyan-300' : 'flex-1 py-2 rounded-md text-slate-400 hover:text-white';
         };
 
+        window.switchTab = (tab) => {
+            currentTab = tab;
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+            
+            // Update nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-cyan-400');
+                link.classList.add('text-slate-400');
+            });
+            event.target.classList.add('text-cyan-400');
+
+            if (tab === 'dashboard') loadDashboardData();
+            if (tab === 'leaderboard') loadLeaderboard();
+        };
+
+        const showMessage = (msg, type = 'info') => {
+            const toast = document.createElement('div');
+            toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-xl glass border ${type === 'error' ? 'border-red-500/50 text-red-400' : 'border-cyan-500/50 text-cyan-400'} z-[100] animate-bounce`;
+            toast.innerText = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        };
+
+        // AUTHENTICATION
         window.handleGoogleLogin = async () => {
+            const provider = new GoogleAuthProvider();
             try {
-                document.getElementById('auth-form-container').classList.add('hidden');
-                document.getElementById('auth-loading').classList.remove('hidden');
-                const provider = new GoogleAuthProvider();
                 const result = await signInWithPopup(auth, provider);
                 await initializeUser(result.user);
             } catch (err) {
-                document.getElementById('loading-text').innerText = "Google Auth Failed: " + err.message;
-                document.getElementById('auth-error-reset').classList.remove('hidden');
+                showMessage(err.message, 'error');
             }
         };
 
         window.handleEmailAuth = async () => {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
-            if(!email || !pass) return alert("Please provide both email and password.");
-            
+            if (!email || !pass) return showMessage("Fill all fields", 'error');
+
             try {
-                document.getElementById('auth-form-container').classList.add('hidden');
+                document.getElementById('auth-form').classList.add('hidden');
                 document.getElementById('auth-loading').classList.remove('hidden');
                 
-                let cred;
+                let userCred;
                 try {
-                    cred = await signInWithEmailAndPassword(auth, email, pass);
-                } catch (err) {
-                    if (err.code === 'auth/user-not-found') {
-                        cred = await createUserWithEmailAndPassword(auth, email, pass);
-                    } else if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
-                        throw new Error("Login blocked: Incorrect password for this existing profile.");
-                    } else {
-                        throw err;
-                    }
+                    userCred = await signInWithEmailAndPassword(auth, email, pass);
+                } catch (e) {
+                    userCred = await createUserWithEmailAndPassword(auth, email, pass);
                 }
-                await initializeUser(cred.user);
+                await initializeUser(userCred.user);
             } catch (err) {
-                document.getElementById('auth-form-container').classList.remove('hidden');
+                document.getElementById('auth-form').classList.remove('hidden');
                 document.getElementById('auth-loading').classList.add('hidden');
-                alert(err.message);
+                showMessage(err.message, 'error');
             }
         };
 
         const initializeUser = async (user) => {
-            const userRef = doc(db, 'artifacts', appId, 'users', user.uid);
-            const snap = await getDoc(userRef);
-            if (!snap.exists()) {
-                userData = {
+            const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid);
+            const userSnap = await getDoc(userDocRef);
+            
+            if (!userSnap.exists()) {
+                const newUser = {
                     uid: user.uid,
                     email: user.email,
                     displayName: user.displayName || user.email.split('@')[0],
                     role: authMode,
-                    classId: authMode === 'teacher' ? Math.random().toString(36).substring(2,8).toUpperCase() : null,
+                    classId: authMode === 'teacher' ? Math.random().toString(36).substring(2, 8).toUpperCase() : null,
                     createdAt: serverTimestamp()
                 };
-                await setDoc(userRef, userData);
+                await setDoc(userDocRef, newUser);
+                userData = newUser;
             } else {
-                userData = snap.data();
+                userData = userSnap.data();
             }
-            renderApp();
-        };
-
-        const renderApp = () => {
+            
+            setupUIForRole();
             document.getElementById('auth-overlay').classList.add('hidden');
             document.getElementById('app-container').classList.remove('hidden');
             document.getElementById('main-nav').classList.remove('hidden');
+            resetTest();
+        };
+
+        const setupUIForRole = () => {
+            const isTeacher = userData.role === 'teacher';
             document.getElementById('nav-role-badge').innerText = userData.role;
+            document.getElementById('student-class-section').classList.toggle('hidden', isTeacher);
+            document.getElementById('teacher-class-section').classList.toggle('hidden', !isTeacher);
             document.getElementById('user-display-name').innerText = userData.displayName;
             document.getElementById('user-display-email').innerText = userData.email;
             document.getElementById('user-avatar').innerText = userData.displayName[0].toUpperCase();
             
-            const isT = userData.role === 'teacher';
-            document.getElementById('student-tools').classList.toggle('hidden', isT);
-            document.getElementById('teacher-tools').classList.toggle('hidden', !isT);
-            
-            if (isT) document.getElementById('teacher-class-id').querySelector('span').innerText = userData.classId;
-            else {
-                document.getElementById('display-class-id').innerText = userData.classId || "UNASSIGNED";
-                listenForAssignments(userData.classId);
+            if (isTeacher) {
+                document.getElementById('teacher-class-id').querySelector('span').innerText = userData.classId;
+            } else {
+                document.getElementById('display-class-id').innerText = userData.classId || "No Class Joined";
             }
-            resetTest();
         };
 
-        // Test Logic Mechanics
+        window.handleLogout = () => {
+            signOut(auth).then(() => window.location.reload());
+        };
+
+        // TYPING ENGINE
+        const initKeyboard = () => {
+            const layout = [
+                ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+                ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+                ["Z", "X", "C", "V", "B", "N", "M", "Space"]
+            ];
+            const kb = document.getElementById('keyboard');
+            kb.innerHTML = '';
+            layout.forEach(row => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = "flex justify-center gap-1 md:gap-2";
+                row.forEach(key => {
+                    const keyDiv = document.createElement('div');
+                    keyDiv.id = `key-${key.toLowerCase()}`;
+                    keyDiv.className = `h-10 md:h-12 ${key === 'Space' ? 'w-40 md:w-64' : 'w-10 md:w-12'} flex items-center justify-center bg-white/5 border border-white/10 rounded-lg text-xs md:text-sm font-bold transition-all`;
+                    keyDiv.innerText = key;
+                    rowDiv.appendChild(keyDiv);
+                });
+                kb.appendChild(rowDiv);
+            });
+        };
+
+        window.setDuration = (d) => {
+            if (testActive) return;
+            selectedDuration = d;
+            timeLeft = d;
+            document.getElementById('stat-timer').innerText = d + 's';
+            document.querySelectorAll('.duration-btn').forEach(btn => {
+                btn.className = btn.innerText.includes(d) ? 'duration-btn px-4 py-1 rounded-full text-sm bg-cyan-500/20 text-cyan-300 border border-cyan-500/50' : 'duration-btn px-4 py-1 rounded-full text-sm bg-white/5 text-slate-400 border border-white/10';
+            });
+        };
+
         window.resetTest = () => {
             clearInterval(timer);
             testActive = false;
-            timeLeft = testDuration;
+            timeLeft = selectedDuration;
+            errorCount = 0;
+            inputChars = [];
+            currentText = SAMPLE_TEXTS[Math.floor(Math.random() * SAMPLE_TEXTS.length)];
             
-            // Random Paragraph Selection from Bank
-            let selection = [];
-            let pool = [...COMEDY_BANK];
-            const paragraphsNeeded = Math.ceil(testDuration / 15);
-            for(let i=0; i < paragraphsNeeded; i++) {
-                const idx = Math.floor(Math.random() * pool.length);
-                selection.push(pool.splice(idx, 1)[0]);
-            }
-            currentText = selection.join(" ");
-
             document.getElementById('stat-timer').innerText = timeLeft + 's';
             document.getElementById('stat-wpm').innerText = '0';
             document.getElementById('stat-accuracy').innerText = '100%';
+            document.getElementById('stat-errors').innerText = '0';
             
-            const box = document.getElementById('typing-box');
-            box.innerHTML = '';
-            currentText.split('').forEach((c, i) => {
-                const s = document.createElement('span');
-                s.innerText = c;
-                s.className = 'char' + (i === 0 ? ' current' : '');
-                box.appendChild(s);
+            const typingBox = document.getElementById('typing-box');
+            typingBox.innerHTML = '';
+            currentText.split('').forEach((char, i) => {
+                const span = document.createElement('span');
+                span.innerText = char;
+                span.className = 'char';
+                if (i === 0) span.classList.add('current');
+                typingBox.appendChild(span);
             });
+            
             document.getElementById('hidden-input').value = '';
             document.getElementById('hidden-input').focus();
         };
 
-        const highlightKey = (char, active) => {
-            if(!char) return;
-            const keyId = char === ' ' ? 'key-space' : `key-${char.toLowerCase()}`;
-            const keyEl = document.getElementById(keyId);
-            if(keyEl) {
-                if(active) keyEl.classList.add('active');
-                else keyEl.classList.remove('active');
+        const handleTyping = (e) => {
+            if (!testActive && e.target.value.length > 0) {
+                startTimer();
             }
-        };
 
-        document.getElementById('hidden-input').addEventListener('input', (e) => {
-            if(!testActive && e.target.value.length > 0) startTimer();
             const val = e.target.value;
             const chars = document.querySelectorAll('.char');
-            let errors = 0;
             
+            // Highlight current key on virtual keyboard
+            const lastChar = val.slice(-1).toLowerCase();
+            const keyElement = document.getElementById(`key-${lastChar === ' ' ? 'space' : lastChar}`);
+            if (keyElement) {
+                keyElement.classList.add('key-active');
+                setTimeout(() => keyElement.classList.remove('key-active'), 100);
+            }
+
             chars.forEach((span, i) => {
                 span.className = 'char';
-                if(i < val.length) {
-                    if(val[i] === currentText[i]) span.classList.add('correct');
-                    else { span.classList.add('incorrect'); errors++; }
-                } else if(i === val.length) {
+                if (i < val.length) {
+                    if (val[i] === currentText[i]) {
+                        span.classList.add('correct');
+                    } else {
+                        span.classList.add('incorrect');
+                    }
+                } else if (i === val.length) {
                     span.classList.add('current');
-                    // Reset all keys first
-                    document.querySelectorAll('.key').forEach(k => k.classList.remove('active'));
-                    highlightKey(currentText[i], true);
                 }
             });
 
-            const elapsed = (testDuration - timeLeft) || 1;
-            const wpm = Math.round((val.length / 5) / (elapsed / 60));
-            const acc = val.length ? Math.round(((val.length - errors) / val.length) * 100) : 100;
+            // Calculate live stats
+            calculateStats(val);
+
+            if (val.length >= currentText.length) {
+                endTest();
+            }
+        };
+
+        const calculateStats = (val) => {
+            const timePassed = (selectedDuration - timeLeft) || 1;
+            const words = val.length / 5;
+            const wpm = Math.round(words / (timePassed / 60));
             
-            document.getElementById('stat-wpm').innerText = isFinite(wpm) ? wpm : 0;
-            document.getElementById('stat-accuracy').innerText = acc + '%';
+            let errors = 0;
+            for(let i=0; i<val.length; i++) {
+                if (val[i] !== currentText[i]) errors++;
+            }
             
-            if(val.length >= currentText.length) endTest();
-        });
+            const accuracy = val.length > 0 ? Math.round(((val.length - errors) / val.length) * 100) : 100;
+            
+            document.getElementById('stat-wpm').innerText = wpm;
+            document.getElementById('stat-accuracy').innerText = accuracy + '%';
+            document.getElementById('stat-errors').innerText = errors;
+        };
 
         const startTimer = () => {
             testActive = true;
+            startTime = Date.now();
             timer = setInterval(() => {
                 timeLeft--;
                 document.getElementById('stat-timer').innerText = timeLeft + 's';
-                if(timeLeft <= 0) endTest();
+                
+                // Update stats every second
+                calculateStats(document.getElementById('hidden-input').value);
+
+                if (timeLeft <= 0) {
+                    endTest();
+                }
             }, 1000);
         };
 
         const endTest = async () => {
             clearInterval(timer);
             testActive = false;
-            const wpm = parseInt(document.getElementById('stat-wpm').innerText);
-            const acc = parseInt(document.getElementById('stat-accuracy').innerText);
+            const finalWpm = parseInt(document.getElementById('stat-wpm').innerText);
+            const finalAcc = parseInt(document.getElementById('stat-accuracy').innerText);
+            const finalErr = parseInt(document.getElementById('stat-errors').innerText);
 
-            if (userData.classId) {
+            // Save Result to Firestore
+            if (userData && userData.classId) {
                 try {
                     await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'results'), {
                         userId: auth.currentUser.uid,
                         userName: userData.displayName,
                         classId: userData.classId,
-                        wpm: wpm,
-                        accuracy: acc,
+                        wpm: finalWpm,
+                        accuracy: finalAcc,
+                        errors: finalErr,
                         timestamp: serverTimestamp()
                     });
-                } catch (e) { console.error("Save failed:", e); }
+                } catch (e) { console.error("Error saving result", e); }
             }
-            showResultModal(wpm, acc);
-        };
 
-        const showResultModal = (wpm, acc) => {
-            document.getElementById('modal-wpm').innerText = wpm;
-            document.getElementById('modal-accuracy').innerText = acc + '%';
+            // Show Modal
+            document.getElementById('modal-wpm').innerText = finalWpm;
+            document.getElementById('modal-acc').innerText = finalAcc + '%';
             document.getElementById('modal-test-result').classList.remove('hidden');
         };
 
-        window.closeResultModal = () => {
-            document.getElementById('modal-test-result').classList.add('hidden');
+        window.closeModal = (id) => {
+            document.getElementById(id).classList.add('hidden');
             resetTest();
         };
 
-        window.switchTab = (tab) => {
-            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-            document.querySelectorAll('.nav-link').forEach(l => {
-                l.className = 'nav-link px-4 py-2 rounded-xl text-slate-400 font-bold hover:text-white transition-all';
-            });
-            document.getElementById('view-'+tab).classList.remove('hidden');
-            document.getElementById('link-'+tab).className = 'nav-link px-4 py-2 rounded-xl text-cyan-400 font-bold bg-cyan-500/10';
+        // DASHBOARD & ANALYTICS
+        const loadDashboardData = async () => {
+            if (!auth.currentUser) return;
+            const resultsRef = collection(db, 'artifacts', appId, 'public', 'data', 'results');
+            const querySnapshot = await getDocs(resultsRef);
             
-            if(tab === 'dashboard') loadDashboard();
-            if(tab === 'leaderboard') loadLeaderboard();
-        };
-
-        const loadDashboard = async () => {
-            const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'results'), limit(150));
-            const snap = await getDocs(q);
-            const myTests = [];
-            const globalTests = [];
+            let myResults = [];
+            let allResults = [];
             
-            snap.forEach(d => {
-                const data = d.data();
-                if(data.classId === userData.classId) {
-                    globalTests.push(data);
-                    if(data.userId === auth.currentUser.uid) myTests.push(data);
+            querySnapshot.forEach(doc => {
+                const data = doc.data();
+                if (data.classId === userData.classId) {
+                    allResults.push(data);
+                    if (data.userId === auth.currentUser.uid) {
+                        myResults.push(data);
+                    }
                 }
             });
 
-            // Populate Table
-            const tbody = document.getElementById('results-tbody');
-            tbody.innerHTML = globalTests
-                .sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0))
-                .map(r => {
-                    const date = r.timestamp ? new Date(r.timestamp.seconds * 1000) : new Date();
-                    return `
-                        <tr class="hover:bg-white/5 transition-all">
-                            <td class="p-6 text-slate-500 font-medium">${date.toLocaleTimeString()}</td>
-                            <td class="p-6 font-black text-white">${r.userName}</td>
-                            <td class="p-6 text-right font-black text-cyan-400 font-mono text-lg">${r.wpm}</td>
-                            <td class="p-6 text-right font-bold text-emerald-400">${r.accuracy}%</td>
-                        </tr>
-                    `;
-                }).join('');
+            // Sort by date
+            myResults.sort((a, b) => (a.timestamp?.seconds || 0) - (b.timestamp?.seconds || 0));
+            const displayResults = userData.role === 'teacher' ? allResults : myResults;
 
-            renderChart(myTests.sort((a,b) => (a.timestamp?.seconds || 0) - (b.timestamp?.seconds || 0)).slice(-20));
+            // Update Table
+            const tbody = document.getElementById('results-tbody');
+            tbody.innerHTML = '';
+            displayResults.reverse().forEach(res => {
+                const tr = document.createElement('tr');
+                const date = res.timestamp ? new Date(res.timestamp.seconds * 1000).toLocaleDateString() : 'Just now';
+                tr.innerHTML = `
+                    <td class="px-6 py-4 text-slate-300 text-sm">${date}</td>
+                    <td class="px-6 py-4 font-bold text-white">${res.userName}</td>
+                    <td class="px-6 py-4 text-cyan-400 font-mono">${res.wpm}</td>
+                    <td class="px-6 py-4 text-slate-300">${res.accuracy}%</td>
+                    <td class="px-6 py-4 text-red-400">${res.errors}</td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 bg-green-500/10 text-green-500 text-xs rounded">Pass</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Update Chart
+            updatePerformanceChart(myResults);
         };
 
-        const renderChart = (data) => {
+        const updatePerformanceChart = (data) => {
             const ctx = document.getElementById('performanceChart').getContext('2d');
-            if(performanceChart) performanceChart.destroy();
-            
+            if (performanceChart) performanceChart.destroy();
+
             performanceChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: data.map((_, i) => i + 1),
+                    labels: data.map((_, i) => `Test ${i+1}`),
                     datasets: [{
-                        label: 'Typing Speed (WPM)',
+                        label: 'WPM Progress',
                         data: data.map(d => d.wpm),
                         borderColor: '#00f2ff',
                         backgroundColor: 'rgba(0, 242, 255, 0.1)',
-                        borderWidth: 4,
-                        pointBackgroundColor: '#00f2ff',
-                        pointRadius: 6,
-                        tension: 0.4,
-                        fill: true
+                        fill: true,
+                        tension: 0.4
                     }]
                 },
                 options: {
@@ -777,91 +711,135 @@
             });
         };
 
+        // CLASSROOM FEATURES
         window.joinClass = async () => {
-            const cid = document.getElementById('join-class-input').value.toUpperCase();
-            if(!cid) return;
-            await updateDoc(doc(db, 'artifacts', appId, 'users', auth.currentUser.uid), { classId: cid });
-            userData.classId = cid;
-            document.getElementById('display-class-id').innerText = cid;
-            listenForAssignments(cid);
-            alert("Success: You are now synced with classroom " + cid);
+            const classId = document.getElementById('join-class-input').value.toUpperCase();
+            if (!classId) return;
+            
+            const userDocRef = doc(db, 'artifacts', appId, 'users', auth.currentUser.uid);
+            await updateDoc(userDocRef, { classId: classId });
+            userData.classId = classId;
+            document.getElementById('display-class-id').innerText = classId;
+            showMessage(`Joined Class ${classId}`);
         };
 
         window.copyClassId = () => {
-            const id = document.getElementById('teacher-class-id').querySelector('span').innerText;
-            navigator.clipboard.writeText(id);
-            alert("ID Copied to clipboard.");
+            const text = userData.classId;
+            const input = document.createElement('input');
+            input.value = text;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            input.remove();
+            showMessage("Class ID copied to clipboard!");
         };
 
-        window.pushTeacherText = async () => {
-            const text = document.getElementById('custom-push-text').value;
-            if(!text || !userData.classId) return;
-            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'assignments', userData.classId), {
-                text: text, pushedBy: userData.displayName, updatedAt: serverTimestamp()
+        window.exportToCSV = () => {
+            const rows = [["Date", "Student", "WPM", "Accuracy", "Errors"]];
+            document.querySelectorAll('#results-tbody tr').forEach(tr => {
+                const cols = Array.from(tr.querySelectorAll('td')).map(td => td.innerText);
+                rows.push(cols);
             });
-            alert("Assignment Distributed to students.");
+            
+            let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `results_${userData.classId}.csv`);
+            document.body.appendChild(link);
+            link.click();
         };
 
-        const listenForAssignments = (cid) => {
-            if(!cid) return;
-            onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'assignments', cid), (snap) => {
-                if(snap.exists()) {
-                    currentText = snap.data().text;
-                    resetTest();
+        // LEADERBOARD
+        const loadLeaderboard = () => {
+            if (!userData.classId) return showMessage("Join a class first!", 'error');
+            
+            const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'results'));
+            onSnapshot(q, (snapshot) => {
+                let stats = {};
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    if (d.classId === userData.classId) {
+                        if (!stats[d.userId] || stats[d.userId].wpm < d.wpm) {
+                            stats[d.userId] = d;
+                        }
+                    }
+                });
+
+                const sorted = Object.values(stats).sort((a, b) => b.wpm - a.wpm);
+                renderLeaderboard(sorted);
+            }, (err) => console.error(err));
+        };
+
+        const renderLeaderboard = (sorted) => {
+            const list = document.getElementById('leaderboard-list');
+            const podium = document.getElementById('leaderboard-podium');
+            list.innerHTML = '';
+            podium.innerHTML = '';
+
+            // Render Podium (Top 3)
+            const podiumOrder = [1, 0, 2]; // 2nd, 1st, 3rd visually
+            podiumOrder.forEach(idx => {
+                const user = sorted[idx];
+                if (!user) return;
+                const h = [100, 140, 80][idx];
+                const color = ["#cbd5e1", "#fbbf24", "#cd7f32"][idx];
+                const podiumEl = document.createElement('div');
+                podiumEl.className = "flex flex-col items-center gap-2";
+                podiumEl.innerHTML = `
+                    <div class="text-white font-bold">${user.userName}</div>
+                    <div class="text-cyan-400 text-sm">${user.wpm} WPM</div>
+                    <div style="height: ${h}px; background: ${color}" class="w-20 rounded-t-xl flex items-end justify-center pb-4 shadow-lg shadow-black/40">
+                        <span class="text-slate-900 font-black text-2xl">${idx + 1}</span>
+                    </div>
+                `;
+                podium.appendChild(podiumEl);
+            });
+
+            // Render List
+            sorted.forEach((user, i) => {
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-between p-6 hover:bg-white/5 transition-all";
+                row.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 text-slate-500 font-bold">${i + 1}</span>
+                        <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400 font-bold">${user.userName[0]}</div>
+                        <div class="font-bold text-white">${user.userName} ${user.userId === auth.currentUser.uid ? '(You)' : ''}</div>
+                    </div>
+                    <div class="flex gap-8">
+                        <div class="text-center">
+                            <div class="text-xs text-slate-500 uppercase">WPM</div>
+                            <div class="text-cyan-400 font-mono font-bold">${user.wpm}</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-xs text-slate-500 uppercase">Acc</div>
+                            <div class="text-white font-mono font-bold">${user.accuracy}%</div>
+                        </div>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+        };
+
+        // EVENT LISTENERS
+        document.getElementById('hidden-input').addEventListener('input', handleTyping);
+        document.addEventListener('keydown', () => {
+            if (currentTab === 'test' && !document.getElementById('modal-test-result').classList.contains('hidden')) return;
+            document.getElementById('hidden-input').focus();
+        });
+
+        // Initialize Keyboard UI
+        window.onload = () => {
+            initKeyboard();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    initializeUser(user);
+                } else {
+                    document.getElementById('auth-overlay').classList.remove('hidden');
                 }
             });
         };
 
-        window.loadLeaderboard = () => {
-            onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'results')), (snap) => {
-                const rankings = {};
-                snap.forEach(d => {
-                    const data = d.data();
-                    if(data.classId === userData.classId) {
-                        if(!rankings[data.userId] || rankings[data.userId].wpm < data.wpm) {
-                            rankings[data.userId] = data;
-                        }
-                    }
-                });
-                
-                const sorted = Object.values(rankings).sort((a,b) => b.wpm - a.wpm);
-                const list = document.getElementById('leaderboard-list');
-                list.innerHTML = sorted.map((u, i) => `
-                    <div class="flex items-center justify-between p-8 hover:bg-white/5 transition-all group">
-                        <div class="flex items-center gap-6">
-                            <span class="text-3xl font-black ${i < 3 ? 'text-cyan-400 neon-text' : 'text-slate-700'} w-12 italic">#${i+1}</span>
-                            <div class="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-cyan-500/30 transition-all">
-                                <span class="text-xl font-black text-white">${u.userName[0].toUpperCase()}</span>
-                            </div>
-                            <div>
-                                <div class="font-black text-white text-lg tracking-tight">${u.userName} ${u.userId === auth.currentUser.uid ? '<span class="text-cyan-400 text-xs ml-2">(YOU)</span>' : ''}</div>
-                                <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Global Typist</div>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-4xl font-black text-cyan-400 tracking-tighter tabular-nums">${u.wpm} <span class="text-xs uppercase">WPM</span></div>
-                            <div class="text-[10px] font-black text-slate-500 uppercase tracking-widest">${u.accuracy}% Accuracy</div>
-                        </div>
-                    </div>
-                `).join('');
-            });
-        };
-
-        window.handleLogout = () => signOut(auth).then(() => location.reload());
-
-        // Keyboard Event Setup
-        window.onload = () => {
-            initKeyboard();
-            onAuthStateChanged(auth, u => { if(u) initializeUser(u); });
-        };
-
-        document.addEventListener('keydown', (e) => {
-            if(e.key === 'Tab') { e.preventDefault(); resetTest(); }
-            if(e.key === 'Escape') { if(testActive) endTest(); }
-            if(document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
-                document.getElementById('hidden-input').focus();
-            }
-        });
     </script>
 </body>
 </html>
