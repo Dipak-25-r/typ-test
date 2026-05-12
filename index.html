@@ -408,7 +408,7 @@
         window.handleGoogleLogin = async () => {
             const provider = new GoogleAuthProvider();
             try {
-                const result = await signInWithPopup(auth, provider);
+                const result = await signInWithRedirect(auth, provider);
                 await initializeUser(result.user);
             } catch (err) {
                 showMessage(err.message, 'error');
@@ -576,13 +576,13 @@
             // Calculate live stats
             calculateStats(val);
 
-            if (val.length >= currentText.length) {
+            if (val.length > currentText.length) {    e.target.value = val.substring(0, currentText.length); } {
                 endTest();
             }
         };
 
         const calculateStats = (val) => {
-            const timePassed = (selectedDuration - timeLeft) || 1;
+            const timePassed = Math.max((Date.now() - startTime) / 1000, 1);
             const words = val.length / 5;
             const wpm = Math.round(words / (timePassed / 60));
             
