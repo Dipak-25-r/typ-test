@@ -359,6 +359,7 @@
         let errorCount = 0;
         let startTime = null;
         let performanceChart = null;
+        const keySound = new Audio("https://www.soundjay.com/mechanical/keyboard-1.mp3");
 
         const SAMPLE_TEXTS = [
             "Technology is best when it brings people together. The purpose of education is to turn mirrors into windows. Learning never exhausts the mind.",
@@ -380,7 +381,7 @@
             document.getElementById('btn-teacher').className = mode === 'teacher' ? 'flex-1 py-2 rounded-md bg-cyan-500/20 border border-cyan-500/50 text-cyan-300' : 'flex-1 py-2 rounded-md text-slate-400 hover:text-white';
         };
 
-        window.switchTab = (tab) => {
+        window.switchTab = (tab, el) => {
             currentTab = tab;
             document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
             document.getElementById(`view-${tab}`).classList.remove('hidden');
@@ -523,7 +524,7 @@
             timeLeft = selectedDuration;
             errorCount = 0;
             inputChars = [];
-            currentText = SAMPLE_TEXTS[Math.floor(Math.random() * SAMPLE_TEXTS.length)];
+            let newText; do {     newText = SAMPLE_TEXTS[Math.floor(Math.random() * SAMPLE_TEXTS.length)]; } while(newText === currentText);  currentText = newText;
             
             document.getElementById('stat-timer').innerText = timeLeft + 's';
             document.getElementById('stat-wpm').innerText = '0';
@@ -548,6 +549,7 @@
             if (!testActive && e.target.value.length > 0) {
                 startTimer();
             }
+            if (e.inputType === "insertFromPaste") return;
 
             const val = e.target.value;
             const chars = document.querySelectorAll('.char');
@@ -576,9 +578,14 @@
             // Calculate live stats
             calculateStats(val);
 
-            if (val.length > currentText.length) {    e.target.value = val.substring(0, currentText.length); } {
-                endTest();
-            }
+           if (val.length > currentText.length) {
+    e.target.value = val.substring(0, currentText.length);
+    return;
+}
+
+if (val.length === currentText.length) {
+    endTest();
+}
         };
 
         const calculateStats = (val) => {
