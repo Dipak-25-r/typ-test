@@ -391,7 +391,7 @@
                 link.classList.remove('text-cyan-400');
                 link.classList.add('text-slate-400');
             });
-            event.target.classList.add('text-cyan-400');
+            if (el) el.classList.add('text-cyan-400');
 
             if (tab === 'dashboard') loadDashboardData();
             if (tab === 'leaderboard') loadLeaderboard();
@@ -589,7 +589,7 @@ if (val.length === currentText.length) {
         };
 
         const calculateStats = (val) => {
-            const timePassed = Math.max((Date.now() - startTime) / 1000, 1);
+            const timePassed = (selectedDuration - timeLeft) || 1;
             const words = val.length / 5;
             const wpm = Math.round(words / (timePassed / 60));
             
